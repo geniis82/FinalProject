@@ -1,0 +1,85 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="final_project.tree_view_polizamodel">
+            <field name="name">Polizas</field>
+            <field name="model">final_project.polizamodel</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='name' />
+                    <field name='data'/>
+                    <field name='usuario'/>
+                    <field name='vehiculo_id'/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="final_project.form_view_polizamodel">
+            <field name="name">Polizas</field>
+            <field name="model">final_project.polizamodel</field>
+            <field name="arch" type="xml">
+                <form string="Vehiculos">
+                    <sheet>
+                        <notebook>
+                            <page string="Poliza">
+                                <group name="root">
+                                    <group name='left'>
+                                        <field name='usuario' />
+                                        <field name='aseguradora_id'/>
+                                        <field name='vehiculo_id' domain="[('id', 'not in', used_vehicles), ('usuario', '=', usuario)]" attrs="{'invisible': [('usuario', '=', False)]}"/>
+                                        <!-- Agregar el campo used_vehicles y ocultarlo visualmente -->
+                                        <field name='used_vehicles' invisible="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="final_project.poliza_action_window">
+            <field name="name">Polizas</field>
+            <field name="res_model">final_project.polizamodel</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- server action to the one above -->
+        <!--
+        <record model="ir.actions.server" id="convalidationapp.action_server">
+        <field name="name">convalidationapp server</field>
+        <field name="model_id" ref="model_convalidationapp_convalidationapp"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form",
+            "res_model": model._name,
+        }
+        </field>
+        </record>
+-->
+
+        <!-- Top menu item -->
+        <!--
+    <menuitem name="convalidationapp" id="convalidationapp.menu_root"/>
+-->
+        <!-- menu categories -->
+        <!--
+    <menuitem name="Menu 1" id="convalidationapp.menu_1" parent="convalidationapp.menu_root"/>
+    <menuitem name="Menu 2" id="convalidationapp.menu_2" parent="convalidationapp.menu_root"/>
+-->
+        <!-- actions -->
+        <!--
+    <menuitem name="List" id="convalidationapp.menu_1_list" parent="convalidationapp.menu_1"
+                action="convalidationapp.action_window"/>
+    <menuitem name="Server to list" id="convalidationapp" parent="convalidationapp.menu_2"
+                action="convalidationapp.action_server"/>
+-->
+    </data>
+</odoo>

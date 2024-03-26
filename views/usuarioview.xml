@@ -1,0 +1,101 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="final_project.tree_view_usuariomodel">
+            <field name="name">Usuarios</field>
+            <field name="model">final_project.usuariomodel</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="dni" />
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="final_project.form_view_usuariomodel">
+            <field name="name">Usuarios</field>
+            <field name="model">final_project.usuariomodel</field>
+            <field name="arch" type="xml">
+                <form string="Usuario">
+                    <sheet>
+                        <notebook>
+                            <page string="Persona Information">
+                                <group name="root">
+                                    <group name="left">
+                                        <h1 style="color: purple;" colspan="2">Personal Inforation</h1>
+                                        <h1 colspan="2"> 
+                                            <field name="dni" />
+                                        </h1>
+                                        <field name="name" />
+                                        <field name="surname" />
+                                        <field name="tlf" />
+                                        <field name="dateBirth" />
+                                        <field name="email" />
+                                        <field name="vehiculos"/>
+                                    </group>
+                                    <group name="right">
+                                        <h1 style="color: purple;" colspan="2">Photo</h1>
+                                        <field name="photo" widget="image" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string='Polizas'>
+                                <group name='root'>
+                                    <group name='left'>
+                                        <field name='polizas'/>
+                                    </group>
+                                    
+                                </group>
+                            </page>
+                            </notebook>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="final_project.usuario_action_window">
+            <field name="name">Usuarios</field>
+            <field name="res_model">final_project.usuariomodel</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- server action to the one above -->
+        <!--
+        <record model="ir.actions.server" id="convalidationapp.action_server">
+        <field name="name">convalidationapp server</field>
+        <field name="model_id" ref="model_convalidationapp_convalidationapp"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form",
+            "res_model": model._name,
+        }
+        </field>
+        </record>
+-->
+
+        <!-- Top menu item -->
+        <!--
+    <menuitem name="convalidationapp" id="convalidationapp.menu_root"/>
+-->
+        <!-- menu categories -->
+        <!--
+    <menuitem name="Menu 1" id="convalidationapp.menu_1" parent="convalidationapp.menu_root"/>
+    <menuitem name="Menu 2" id="convalidationapp.menu_2" parent="convalidationapp.menu_root"/>
+-->
+        <!-- actions -->
+        <!--
+    <menuitem name="List" id="convalidationapp.menu_1_list" parent="convalidationapp.menu_1"
+                action="convalidationapp.action_window"/>
+    <menuitem name="Server to list" id="convalidationapp" parent="convalidationapp.menu_2"
+                action="convalidationapp.action_server"/>
+-->
+    </data>
+</odoo>

@@ -1,0 +1,113 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="final_project.tree_view_aseguradoramodel">
+            <field name="name">Aseguradoras</field>
+            <field name="model">final_project.aseguradoramodel</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='photo'/>
+                    <field name='name'/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="final_project.kanban_view_aseguradoramodel">
+            <field name="name">Aseguradoras</field>
+            <field name="model">final_project.aseguradoramodel</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="photo"/>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="o_kanban_image" style="width:50%">
+                                    <field name="photo" nolabel="1" widget="image" class="oe_right oe_avatar"/>
+                                </div>
+                                <div class="oe_kanban_details" >
+                                    <strong>
+                                        <field name="name" class="oe_inline"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="final_project.form_view_aseguradoramodel">
+            <field name="name">Aseguradoras</field>
+            <field name="model">final_project.aseguradoramodel</field>
+            <field name="arch" type="xml">
+                <form string="Aseguradora">
+                    <sheet>
+                        <notebook>
+                            <page string="Información" >
+                                <group name="root">
+                                    <group name='left'>
+                                        <field name='photo'/>
+                                        <field name='name'/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Polizas">
+                                <group name="root">
+                                    <group name='left'>
+                                        <field name="polizas"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="final_project.aseguradoras_action_window">
+            <field name="name">Aseguradoras</field>
+            <field name="res_model">final_project.aseguradoramodel</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+
+        <!-- server action to the one above -->
+        <!--
+        <record model="ir.actions.server" id="convalidationapp.action_server">
+        <field name="name">convalidationapp server</field>
+        <field name="model_id" ref="model_convalidationapp_convalidationapp"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form",
+            "res_model": model._name,
+        }
+        </field>
+        </record>
+-->
+
+        <!-- Top menu item -->
+        <!--
+    <menuitem name="convalidationapp" id="convalidationapp.menu_root"/>
+-->
+        <!-- menu categories -->
+        <!--
+    <menuitem name="Menu 1" id="convalidationapp.menu_1" parent="convalidationapp.menu_root"/>
+    <menuitem name="Menu 2" id="convalidationapp.menu_2" parent="convalidationapp.menu_root"/>
+-->
+        <!-- actions -->
+        <!--
+    <menuitem name="List" id="convalidationapp.menu_1_list" parent="convalidationapp.menu_1"
+                action="convalidationapp.action_window"/>
+    <menuitem name="Server to list" id="convalidationapp" parent="convalidationapp.menu_2"
+                action="convalidationapp.action_server"/>
+-->
+    </data>
+</odoo>

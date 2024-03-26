@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <!-- Top menu item-->
+        <menuitem name="FinalProject" id="final_project.menu_root"/>
+
+
+        <!-- menu categories-->
+        <menuitem name="Usuarios" id="final_project.menu_usuarios"
+        parent="final_project.menu_root"
+        />
+        <menuitem name="Vehiculos" id="final_project.menu_vehiculos"
+        parent="final_project.menu_root"
+        />
+        <menuitem name="Aseguradoras" id="final_project.menu_aseguradoras"
+        parent="final_project.menu_root"
+        />
+
+        <menuitem name="Polizas" id="final_project.menu_polizas"
+        parent="final_project.menu_root"
+        />
+
+        <!--Actions-->
+        <menuitem name="Usuarios" id="final_project.menu_usuarios_list"
+        parent="final_project.menu_usuarios"
+        action="final_project.usuario_action_window"
+        />
+
+        <menuitem name="Vehiculos" id="final_project.menu_vehiculos_list"
+        parent="final_project.menu_vehiculos"
+        action="final_project.vehiculos_action_window"
+        />
+
+        <menuitem name="Aseguradoras" id="final_project.menu_aseguradoras_list"
+        parent="final_project.menu_aseguradoras"
+        action="final_project.aseguradoras_action_window"
+        />
+
+        <menuitem name="Polizas" id="final_project.menu_polizas_list"
+        parent="final_project.menu_polizas"
+        action="final_project.poliza_action_window"
+        />
+    </data>
+</odoo>
