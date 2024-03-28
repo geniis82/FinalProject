@@ -25,13 +25,13 @@
                                     <group name="left">
                                         <h1 style="color: purple;" colspan="2">Personal Inforation</h1>
                                         <h1 colspan="2"> 
-                                            <field name="dni" />
+                                            <field name="dni"/>
                                         </h1>
                                         <field name="name" />
                                         <field name="surname" />
                                         <field name="tlf" />
                                         <field name="dateBirth" />
-                                        <field name="email" />
+                                        <field name="email" widget="email" />
                                         <field name="vehiculos"/>
                                     </group>
                                     <group name="right">
@@ -42,10 +42,7 @@
                             </page>
                             <page string='Polizas'>
                                 <group name='root'>
-                                    <group name='left'>
-                                        <field name='polizas'/>
-                                    </group>
-                                    
+                                    <field name='polizas' nolabel='1' colspan='2'/>
                                 </group>
                             </page>
                             </notebook>

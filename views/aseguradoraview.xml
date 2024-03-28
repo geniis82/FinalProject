@@ -24,13 +24,8 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_global_click">
-                                <div class="o_kanban_image" style="width:50%">
+                                <div class="o_kanban_image" style="width:100%">
                                     <field name="photo" nolabel="1" widget="image" class="oe_right oe_avatar"/>
-                                </div>
-                                <div class="oe_kanban_details" >
-                                    <strong>
-                                        <field name="name" class="oe_inline"/>
-                                    </strong>
                                 </div>
                             </div>
                         </t>
@@ -49,7 +44,7 @@
                             <page string="Información" >
                                 <group name="root">
                                     <group name='left'>
-                                        <field name='photo'/>
+                                        <field name='photo' widget="image"/>
                                         <field name='name'/>
                                     </group>
                                 </group>

@@ -7,7 +7,8 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name='name' />
-                    <field name='data'/>
+                    <field name='dataInicio'/>
+                    <field name='dataFinal'/>
                     <field name='usuario'/>
                     <field name='vehiculo_id'/>
                 </tree>
@@ -25,11 +26,12 @@
                             <page string="Poliza">
                                 <group name="root">
                                     <group name='left'>
-                                        <field name='usuario' />
-                                        <field name='aseguradora_id'/>
-                                        <field name='vehiculo_id' domain="[('id', 'not in', used_vehicles), ('usuario', '=', usuario)]" attrs="{'invisible': [('usuario', '=', False)]}"/>
+                                        <field name='usuario' domain="[('id', 'in', usuarios_disponibles_para_poliza_ids)]" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                        <field name='aseguradora_id' attrs="{'readonly': [('id', '!=', False)]}"/>
+                                        <field name='vehiculo_id' domain="[('id', 'not in', used_vehicles), ('usuario', '=', usuario)]" attrs="{'invisible': [('usuario', '=', False)], 'readonly': [('id', '!=', False)]}"/>
                                         <!-- Agregar el campo used_vehicles y ocultarlo visualmente -->
                                         <field name='used_vehicles' invisible="1"/>
+                                        <field name='usuarios_disponibles_para_poliza_ids' invisible="1"/>
                                     </group>
                                 </group>
                             </page>
