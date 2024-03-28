@@ -10,6 +10,7 @@
         />
         <menuitem name="Vehiculos" id="final_project.menu_vehiculos"
         parent="final_project.menu_root"
+        groups="final_project.final_project_group_adm"
         />
         <menuitem name="Aseguradoras" id="final_project.menu_aseguradoras"
         parent="final_project.menu_root"
@@ -17,12 +18,20 @@
 
         <menuitem name="Polizas" id="final_project.menu_polizas"
         parent="final_project.menu_root"
+        groups="final_project.final_project_group_adm"
         />
 
         <!--Actions-->
         <menuitem name="Usuarios" id="final_project.menu_usuarios_list"
         parent="final_project.menu_usuarios"
         action="final_project.usuario_action_window"
+        groups="final_project.final_project_group_adm"
+        />
+
+        <menuitem name="ME" id="final_project.menu_usuarios_list_cli"
+        parent="final_project.menu_usuarios"
+        action="final_project.usuario_action_window_cli"
+        groups="final_project.final_project_group_client"
         />
 
         <menuitem name="Vehiculos" id="final_project.menu_vehiculos_list"

@@ -61,6 +61,13 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record model="ir.actions.act_window" id="final_project.usuario_action_window_cli">
+            <field name="name">Me</field>
+            <field name="res_model">final_project.usuariomodel</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('id', '=', uid)]</field>
+        </record>
+
 
         <!-- server action to the one above -->
         <!--

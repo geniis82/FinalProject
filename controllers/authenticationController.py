@@ -14,7 +14,7 @@ class AuthenticationController(http.Controller):
         if username and password:
             user = request.env['res.users'].sudo().search([('login', '=', username)], limit=1)
             if user:
-                authenticated_user = user.authenticate("final_project", username, password, request.httprequest.environ)
+                authenticated_user = user.authenticate("odoodb", username, password, request.httprequest.environ)
                 if authenticated_user:
                     # Generar un token de acceso JWT
                     payload = {'user_id': user.id}
