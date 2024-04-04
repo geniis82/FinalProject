@@ -21,6 +21,10 @@
         groups="final_project.final_project_group_adm"
         />
 
+        <menuitem name="Partes" id="final_project.menu_partes"
+        parent="final_project.menu_root"
+        />
+
         <!--Actions-->
         <menuitem name="Usuarios" id="final_project.menu_usuarios_list"
         parent="final_project.menu_usuarios"
@@ -47,6 +51,11 @@
         <menuitem name="Polizas" id="final_project.menu_polizas_list"
         parent="final_project.menu_polizas"
         action="final_project.poliza_action_window"
+        />
+
+        <menuitem name="Partes" id="final_project.menu_partes_list"
+        parent="final_project.menu_partes"
+        action="final_project.partes_action_window"
         />
     </data>
 </odoo>

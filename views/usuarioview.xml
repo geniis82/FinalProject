@@ -22,11 +22,9 @@
                         <notebook>
                             <page string="Persona Information">
                                 <group name="root">
-                                    <group name="left">
-                                        <h1 style="color: purple;" colspan="2">Personal Inforation</h1>
-                                        <h1 colspan="2"> 
-                                            <field name="dni"/>
-                                        </h1>
+                                    <group>
+                                        <h1 style="color: #9a89c0;" colspan="2">Personal Inforation</h1>
+                                        <field name="dni"/>
                                         <field name="name" />
                                         <field name="surname" />
                                         <field name="tlf" />
@@ -34,8 +32,8 @@
                                         <field name="email" widget="email" />
                                         <field name="vehiculos"/>
                                     </group>
-                                    <group name="right">
-                                        <h1 style="color: purple;" colspan="2">Photo</h1>
+                                    <group>
+                                        <h1 style="color: #9a89c0;" colspan="2">Photo</h1>
                                         <field name="photo" widget="image" />
                                     </group>
                                 </group>
@@ -43,6 +41,11 @@
                             <page string='Polizas'>
                                 <group name='root'>
                                     <field name='polizas' nolabel='1' colspan='2'/>
+                                </group>
+                            </page>
+                            <page string='Partes'>
+                                <group name='root'>
+                                    <field name='partes' nolabel='1' colspan='2'/>
                                 </group>
                             </page>
                             </notebook>

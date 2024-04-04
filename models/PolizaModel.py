@@ -10,8 +10,8 @@ class PolizaModel(models.Model):
     dataInicio = fields.Date(string='Fecha de inicio', default=lambda self: datetime.today(),readonly=True)
     dataFinal = fields.Date(string='Fecha de finalización', compute='_compute_fecha_final', store=True)
 
-    vehiculo_id = fields.Many2one('final_project.vehiculosmodel', string="Vehículo Asociado")
-    usuario= fields.Many2one('final_project.usuariomodel',string="Usuario Asociado")
+    vehiculo_id = fields.Many2one('final_project.vehiculosmodel', string="Vehículo Asociado",ondelete='cascade')
+    usuario= fields.Many2one('final_project.usuariomodel',string="Usuario Asociado",ondelete='cascade')
     aseguradora_id=fields.Many2one('final_project.aseguradoramodel',string='Aseguradora Asociada')
 
     used_vehicles = fields.Many2many('final_project.vehiculosmodel', string="Vehículos con Póliza")

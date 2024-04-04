@@ -30,8 +30,13 @@
         'views/vehiculosview.xml',
         'views/aseguradoraview.xml',
         'views/polizaview.xml',
+        'views/partesview.xml',
         'views/menu.xml',
     ],
+    # 'assets': {
+    # 'web.assets_backend': [
+    #     'views/css_loader.xml',
+    # ],},
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',

@@ -26,7 +26,7 @@
                                         <field name='name'/>
                                         <field name='marca'/>
                                         <field name='modelo'/>
-                                        <!-- <field name='poliza_id'/> -->
+                                        <field name='usuario'/>
                                     </group>
                                 </group>
                             </page>
