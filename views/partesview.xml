@@ -29,7 +29,7 @@
                         <group>
                             <h2 colspan="2" style="color: #9a89c0;">Datos Personales Usuario 1</h2>
                             <field name='client1' attrs="{'readonly': [('id', '!=', False)]}" />                            
-                            <field name="dni" attrs="{'readonly': [('id', '!=', False)]}" />
+                            <field name="dni"  />
                             <field name="nameCliente" attrs="{'readonly': [('id', '!=', False)]}" />
                             <field name="surname" attrs="{'readonly': [('id', '!=', False)]}" />
                             <field name="tlf" attrs="{'readonly': [('id', '!=', False)]}" />

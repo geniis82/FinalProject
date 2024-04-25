@@ -15,7 +15,7 @@ class VehiculosModel(models.Model):
     name=fields.Char(string="Matricula",required=True)
     marca=fields.Char(string="Marca",required=True,index=True)
     modelo =fields.Char(string="Modelo",required=True,index=True)
-    usuario=fields.Many2one('final_project.usuariomodel',string="Propietario")
+    usuario=fields.Many2one('final_project.usuariomodel',string="Propietario",index=True, required=True,ondelete='cascade')
 
     poliza_id=fields.Many2one('final_project.polizamodel',compute='compute_poliza',inverse='poliza_inverse',ondelete='cascade')
     poliza_ids=fields.One2many('final_project.polizamodel','vehiculo_id',ondelete='cascade')

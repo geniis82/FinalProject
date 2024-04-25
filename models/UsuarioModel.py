@@ -23,7 +23,7 @@ class UsuarioModel(models.Model):
     password=fields.Char(default="isca2024.")
     vehiculos = fields.One2many('final_project.vehiculosmodel', 'usuario', string="Vehiculos",ondelete='cascade')
     polizas = fields.One2many('final_project.polizamodel', 'usuario', string='Polizas',readonly=True,ondelete='cascade')
-
+    isClient=fields.Boolean(default=True)
     partes=fields.One2many('final_project.partesmodel','client1',string='Partes',ondelete="cascade")
 
 

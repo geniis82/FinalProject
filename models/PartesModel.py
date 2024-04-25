@@ -3,6 +3,9 @@ from datetime import datetime
 from odoo.exceptions import ValidationError
 import re
 from dateutil.relativedelta import relativedelta
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 class PartesModel(models.Model):
     _name ='final_project.partesmodel'
@@ -18,8 +21,8 @@ class PartesModel(models.Model):
     client1= fields.Many2one('final_project.usuariomodel',string="Usuario 1",required=True,domain="[('polizas', '!=', False)]",ondelete="cascade")
     client2= fields.Many2one('final_project.usuariomodel',string="Usuario 2",domain="[('polizas', '!=', False),('id', '!=', client1)]",ondelete="cascade")
     #Usuario 1 parte
-    dni = fields.Char(string="DNI", size=9, required=True)
-    nameCliente = fields.Char(string="Nombre",  index=True)
+    dni = fields.Char(string="DNI", size=9)
+    nameCliente = fields.Char(string="Nombre",  index=True)                                                      
     surname = fields.Char(string="Apellidos",  index=True)
     tlf = fields.Char(size=9, string="Telefono")
     dateBirth = fields.Date(string='Fecha de Nacimineto')
@@ -40,21 +43,21 @@ class PartesModel(models.Model):
     isClient=fields.Boolean(default=False)
 
     #Usuario 2 parte
-    dni2 = fields.Char(string="DNI",required=True, size=9)
-    nameCliente2 = fields.Char(string="Nombre", required=True, index=True)
-    surname2 = fields.Char(string="Apellidos", required=True, index=True)
-    tlf2 = fields.Char(size=9,required=True, string="Telefono")
-    dateBirth2 = fields.Date(required=True,string='Fecha de Nacimineto')
-    email2 = fields.Char(string="Email",required=True)
+    dni2 = fields.Char(string="DNI", size=9)
+    nameCliente2 = fields.Char(string="Nombre",  index=True)
+    surname2 = fields.Char(string="Apellidos",  index=True)
+    tlf2 = fields.Char(size=9, string="Telefono")
+    dateBirth2 = fields.Date(string='Fecha de Nacimineto')
+    email2 = fields.Char(string="Email")
 
     #Vehiculo 2 parte
-    matricula2=fields.Char(string="Matricula",required=True,size=7)
-    marca2=fields.Char(string="Marca",required=True,index=True)
-    modelo2 =fields.Char(string="Modelo",required=True,index=True)
+    matricula2=fields.Char(string="Matricula",size=7)
+    marca2=fields.Char(string="Marca",index=True)
+    modelo2 =fields.Char(string="Modelo",index=True)
 
     #Aseguradora 2 parte
-    nameAseguradora2=fields.Char(string="Nombre de la Aseguradora",required=True)
-    numPoliza2=fields.Char(string="Numero de Poliza",required=True)
+    nameAseguradora2=fields.Char(string="Nombre de la Aseguradora")
+    numPoliza2=fields.Char(string="Numero de Poliza")
 
     def set_dni2(self,dni):
         self.dni2=dni
@@ -187,6 +190,7 @@ class PartesModel(models.Model):
         else:
             raise ValidationError("El formato del correo electronico del usuario 2 es incorrecto")
         
+        
     @api.constrains("dateBirth2")
     def checkYears(self):
         edad = relativedelta(datetime.now(), self.dateBirth2)
@@ -201,3 +205,35 @@ class PartesModel(models.Model):
             pattern3 = r'^[A-Z]{2}\d{4}[A-Z]{2}$'
             if not (re.match(pattern1, vehiculo.matricula2) or re.match(pattern2, vehiculo.matricula2) or re.match(pattern3, vehiculo.matricula2)):
                 raise ValidationError("El formato de la matrícula del usuario 2 es incorrecto. Debe ser 0000XXX, X0000XX o XX0000XX.")
+            
+
+
+    # @api.model
+    # def create(self, vals):
+    #     # Crea el parte
+    #     new_parte = super(PartesModel, self).create(vals)
+        
+    #     # Envía correo electrónico
+    #     self.send_email('Nuevo parte de accidente', f'Se ha generado un nuevo parte de accidente con ID: {new_parte.name}', 'josgenpas@alu.edu.gva.es')
+        
+    #     return new_parte
+    
+
+    @api.model
+    def send_email(self, subject, message, to_email):
+        from_email = 'lgp398@gmail.com'  # Cambiar al correo del remitente
+        password = '1998Valencia.xdxd'  # Cambiar a la contraseña del remitente
+
+        msg = MIMEMultipart()
+        msg['From'] = from_email
+        msg['To'] = to_email
+        msg['Subject'] = subject
+
+        msg.attach(MIMEText(message, 'plain'))
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(from_email, password)
+        text = msg.as_string()
+        server.sendmail(from_email, to_email, text)
+        server.quit()
