@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="dni" />
-                    <field name="name" />
+                    <field name="name" />    
                 </tree>
             </field>
         </record>
@@ -34,7 +34,7 @@
                                     </group>
                                     <group>
                                         <h1 style="color: #9a89c0;" colspan="2">Photo</h1>
-                                        <field name="photo" widget="image" />
+                                        <field name="photoUsu" widget="image" />
                                     </group>
                                 </group>
                             </page>
@@ -55,6 +55,16 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="final_project.search_view_usuariomodel">
+            <field name="name">Clientes Searches</field>
+            <field name="model">final_project.usuariomodel</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="IsClient" name="isclient" domain="[('isClient','=','True')]" />
+                </search>
+            </field>
+        </record>
+
 
         <!-- actions opening views on models -->
 
@@ -62,6 +72,7 @@
             <field name="name">Usuarios</field>
             <field name="res_model">final_project.usuariomodel</field>
             <field name="view_mode">tree,form</field>
+            <field name="context"> {"search_default_isclient":1} </field>
         </record>
 
         <record model="ir.actions.act_window" id="final_project.usuario_action_window_cli">

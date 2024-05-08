@@ -6,7 +6,7 @@ class PolizaModel(models.Model):
     _name ='final_project.polizamodel'
     _description='Poliza Model'
 
-    name = fields.Integer(string='Poliza ID', default=lambda self: self.setRef(),readonly=True)
+    name = fields.Char(string='Poliza ID', default=lambda self: self.setRef(),readonly=True)
     dataInicio = fields.Date(string='Fecha de inicio', default=lambda self: datetime.today(),readonly=True)
     dataFinal = fields.Date(string='Fecha de finalización', compute='_compute_fecha_final', store=True)
 
@@ -40,6 +40,6 @@ class PolizaModel(models.Model):
     def setRef(self):
         result = self.env['final_project.polizamodel'].search_read([])
         if len(result) == 0:
-            return 1
+            return '1'
         else:
-            return result[-1]["name"] + 1
+            return str(int(result[-1]["name"]) + 1)

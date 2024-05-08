@@ -17,7 +17,7 @@ class UsuarioModel(models.Model):
     name = fields.Char(string="Name", required=True, index=True)
     surname = fields.Char(string="Surname", required=True, index=True)
     tlf = fields.Char(size=9, required=True, string="Phone")
-    photo = fields.Binary()
+    photoUsu = fields.Binary()
     dateBirth = fields.Date(required=True)
     email = fields.Char(string="email", required=True)
     password=fields.Char(default="isca2024.")
@@ -26,22 +26,8 @@ class UsuarioModel(models.Model):
     isClient=fields.Boolean(default=True)
     partes=fields.One2many('final_project.partesmodel','client1',string='Partes',ondelete="cascade")
 
-
     def set_dni(self,dni):
         self.dni=dni
-
-    # @api.model
-    # def create(self, vals):
-    #     # Crear el usuario en Odoo
-    #     user_vals = {
-    #         'name': '{} {}'.format(vals.get('name', ''), vals.get('surname', '')),
-    #         'login': vals.get('email', ''),
-    #         'password': 'isca2024.',
-    #         'email': vals.get('email', ''),
-    #     }
-    #     user = self.env['res.users'].create(user_vals)
-    #     # Continuar con la creación del usuario en el modelo
-    #     return super(UsuarioModel, self).create(vals)
 
     def unlink(self):
         # Eliminar el usuario de res.users

@@ -20,7 +20,6 @@ class VehiculosModel(models.Model):
     poliza_id=fields.Many2one('final_project.polizamodel',compute='compute_poliza',inverse='poliza_inverse',ondelete='cascade')
     poliza_ids=fields.One2many('final_project.polizamodel','vehiculo_id',ondelete='cascade')
 
-
     def set_matricula(self,matricula):
         self.name=matricula
 

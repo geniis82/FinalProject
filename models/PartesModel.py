@@ -3,9 +3,8 @@ from datetime import datetime
 from odoo.exceptions import ValidationError
 import re
 from dateutil.relativedelta import relativedelta
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import base64
+import requests
 
 class PartesModel(models.Model):
     _name ='final_project.partesmodel'
@@ -14,53 +13,66 @@ class PartesModel(models.Model):
     name = fields.Integer(string='Poliza ID', default=lambda self: self.setRef(),readonly=True)
     descripcion=fields.Text(required=True,string="Descripción del Accidente",index=True)
     dataParte = fields.Date(string="Fecha del Parte", default=lambda self: datetime.today(),readonly=True,index=True)
-    photo=fields.Binary(string="Foto del accidente",index=True)
+    photo=fields.Binary()
+    
     location=fields.Char(required=True,string="Localidad",index=True)
     addres=fields.Char(required=True,string="Dirección",index=True)
 
     client1= fields.Many2one('final_project.usuariomodel',string="Usuario 1",required=True,domain="[('polizas', '!=', False)]",ondelete="cascade")
     client2= fields.Many2one('final_project.usuariomodel',string="Usuario 2",domain="[('polizas', '!=', False),('id', '!=', client1)]",ondelete="cascade")
     #Usuario 1 parte
-    dni = fields.Char(string="DNI", size=9)
-    nameCliente = fields.Char(string="Nombre",  index=True)                                                      
-    surname = fields.Char(string="Apellidos",  index=True)
-    tlf = fields.Char(size=9, string="Telefono")
-    dateBirth = fields.Date(string='Fecha de Nacimineto')
-    email = fields.Char(string="Email",)
-
+    dni = fields.Char(related='client1.dni', readonly=True)
+    nameCliente = fields.Char(related='client1.name', readonly=True)
+    surname = fields.Char(related='client1.surname', readonly=True)
+    tlf = fields.Char(related='client1.tlf', readonly=True)
+    dateBirth = fields.Date(related='client1.dateBirth', readonly=True)
+    email = fields.Char(related='client1.email', readonly=True, string="Email")
+    
     vehiculo = fields.Many2one('final_project.vehiculosmodel', string="Vehiculo", domain="[('usuario', '=', client1)]",required=True,ondelete='cascade')
     vehiculo2 = fields.Many2one('final_project.vehiculosmodel', string="Vehiculo", domain="[('usuario', '=', client2)]",ondelete='cascade')
 
     #Vehiculo 1 parte
-    matricula=fields.Char(string="Matricula",size=7)
-    marca=fields.Char(string="Marca",index=True)
-    modelo =fields.Char(string="Modelo",index=True)
+    matricula=fields.Char(string="Matricula" ,related='vehiculo.name',size=7)
+    marca=fields.Char(string="Marca",related='vehiculo.marca',index=True)
+    modelo =fields.Char(string="Modelo",related='vehiculo.modelo',index=True)
 
     #Aseguradora 1 parte
-    nameAseguradora=fields.Char(string="Nombre de la Aseguradora")
-    numPoliza=fields.Char(string="Numero de Poliza")
+    nameAseguradora=fields.Char(related='client1.vehiculos.poliza_id.aseguradora_id.name', readonly=True, string="Nombre Aseguradora")
+    numPoliza = fields.Char(related='client1.vehiculos.poliza_id.name', readonly=True, string="Número de Póliza")
 
-    isClient=fields.Boolean(default=False)
+    isClient=fields.Boolean(default=False,related='client2.isClient')
 
     #Usuario 2 parte
-    dni2 = fields.Char(string="DNI", size=9)
-    nameCliente2 = fields.Char(string="Nombre",  index=True)
-    surname2 = fields.Char(string="Apellidos",  index=True)
-    tlf2 = fields.Char(size=9, string="Telefono")
-    dateBirth2 = fields.Date(string='Fecha de Nacimineto')
-    email2 = fields.Char(string="Email")
+    dni2 = fields.Char(related='client2.dni', readonly=True, string="DNI Usuario 2")
+    nameCliente2 = fields.Char(related='client2.name', readonly=True, string="Nombre Usuario 2")
+    surname2 = fields.Char(related='client2.surname', readonly=True, string="Apellidos Usuario 2")
+    tlf2 = fields.Char(related='client2.tlf', readonly=True, string="Teléfono Usuario 2")
+    dateBirth2 = fields.Date(related='client2.dateBirth', readonly=True, string="Fecha de Nacimiento Usuario 2")
+    email2 = fields.Char(related='client2.email', readonly=True, string="Email Usuario 2")
+
 
     #Vehiculo 2 parte
-    matricula2=fields.Char(string="Matricula",size=7)
-    marca2=fields.Char(string="Marca",index=True)
-    modelo2 =fields.Char(string="Modelo",index=True)
+    matricula2 = fields.Char(related='client2.vehiculos.name', readonly=True, string="Matricula Vehículo 2")
+    marca2 = fields.Char(related='client2.vehiculos.marca', readonly=True, string="Marca Vehículo 2")
+    modelo2 = fields.Char(related='client2.vehiculos.modelo', readonly=True, string="Modelo Vehículo 2")
 
     #Aseguradora 2 parte
-    nameAseguradora2=fields.Char(string="Nombre de la Aseguradora")
-    numPoliza2=fields.Char(string="Numero de Poliza")
+    nameAseguradora2=fields.Char(related='client2.vehiculos.poliza_id.aseguradora_id.name', readonly=True, string="Nombre Aseguradora")
+    numPoliza2 = fields.Char(related='client2.vehiculos.poliza_id.name', readonly=True, string="Número de Póliza")
+
+
+    nameAsegurNoClien=fields.Char(string="Nombre Aseguradora")
+    numPoliNoClien=fields.Char(string="Número de Póliza")
 
     def set_dni2(self,dni):
         self.dni2=dni
+
+    @api.onchange('nameAseguradora2', 'numPoliza2')
+    def _onchange_nameAseguradora2_numPoliza2(self):
+        if self.nameAseguradora2 == False:
+            self.nameAseguradora2 = self.nameAsegurNoClien
+        if self.numPoliza2 == False:
+            self.numPoliza2 = self.numPoliNoClien
 
     @api.onchange('client1')
     def onchange_client(self):
@@ -170,7 +182,6 @@ class PartesModel(models.Model):
                     raise ValidationError("La letra del DNI del usuario 2 es incorrecta")
         return True
 
-    
     @api.constrains("tlf2")
     def _check_tlf(self):
         if len(self.tlf2)!=9:
@@ -205,35 +216,3 @@ class PartesModel(models.Model):
             pattern3 = r'^[A-Z]{2}\d{4}[A-Z]{2}$'
             if not (re.match(pattern1, vehiculo.matricula2) or re.match(pattern2, vehiculo.matricula2) or re.match(pattern3, vehiculo.matricula2)):
                 raise ValidationError("El formato de la matrícula del usuario 2 es incorrecto. Debe ser 0000XXX, X0000XX o XX0000XX.")
-            
-
-
-    # @api.model
-    # def create(self, vals):
-    #     # Crea el parte
-    #     new_parte = super(PartesModel, self).create(vals)
-        
-    #     # Envía correo electrónico
-    #     self.send_email('Nuevo parte de accidente', f'Se ha generado un nuevo parte de accidente con ID: {new_parte.name}', 'josgenpas@alu.edu.gva.es')
-        
-    #     return new_parte
-    
-
-    @api.model
-    def send_email(self, subject, message, to_email):
-        from_email = 'lgp398@gmail.com'  # Cambiar al correo del remitente
-        password = '1998Valencia.xdxd'  # Cambiar a la contraseña del remitente
-
-        msg = MIMEMultipart()
-        msg['From'] = from_email
-        msg['To'] = to_email
-        msg['Subject'] = subject
-
-        msg.attach(MIMEText(message, 'plain'))
-
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(from_email, password)
-        text = msg.as_string()
-        server.sendmail(from_email, to_email, text)
-        server.quit()

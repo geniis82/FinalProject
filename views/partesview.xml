@@ -28,45 +28,52 @@
                         </group>
                         <group>
                             <h2 colspan="2" style="color: #9a89c0;">Datos Personales Usuario 1</h2>
-                            <field name='client1' attrs="{'readonly': [('id', '!=', False)]}" />                            
-                            <field name="dni"  />
-                            <field name="nameCliente" attrs="{'readonly': [('id', '!=', False)]}" />
-                            <field name="surname" attrs="{'readonly': [('id', '!=', False)]}" />
-                            <field name="tlf" attrs="{'readonly': [('id', '!=', False)]}" />
-                            <field name="dateBirth" attrs="{'readonly': [('id', '!=', False)]}" />
-                            <field name="email" attrs="{'readonly': [('id', '!=', False)]}" widget="email"  />
-                            <h2 colspan="2" style="color: #9a89c0;">Vehiculo</h2>
-                            <field name='vehiculo' attrs="{'readonly': [('id', '!=', False)],'invisible': [('client1', '=', False)]}" />                            
+                            <field name='client1' attrs="{'invisible':1}" />                            
+                            <field name="dni" attrs="{'readonly': [('client1', '!=', False)]}" />
+                            <field name="nameCliente" attrs="{ 'readonly': [('client1', '!=', False)]}" />
+                            <field name="surname" attrs="{ 'readonly': [('client1', '!=', False)]}" />
+                            <field name="tlf" attrs="{ 'readonly': [('client1', '!=', False)]}" />
+                            <field name="dateBirth" attrs="{ 'readonly': [('client1', '!=', False)]}" />
+                            <field name="email" attrs="{ 'readonly': [('client1', '!=', False)]}" widget="email"  />
+
+                            <h2 colspan="2" style="color: #9a89c0;">Datos Vehiculo Usuario 1</h2>
+                            <field name='vehiculo' attrs="{'invisible': 1}" />                            
                             <field name='matricula' attrs="{'readonly': [('id', '!=', False)]}" />
                             <field name='marca' attrs="{'readonly': [('id', '!=', False)]}" />
                             <field name='modelo' attrs="{'readonly': [('id', '!=', False)]}" />
-                            <h2 colspan="2" style="color: #9a89c0;">Aseguradora</h2>
+
+                            <h2 colspan="2" style="color: #9a89c0;">Datos Aseguradora Usuario 1</h2>
                             <field name="nameAseguradora" attrs="{'readonly': [('id', '!=', False)]}" />
-                            <field name="numPoliza" attrs="{'readonly': [('id', '!=', False)]}" />
+                            <field name="numPoliza"  attrs="{'readonly': [('id', '!=', False)]}" />
                         </group>
                         <group>
                             <field name='isClient' string='Pertence a la Gestoria?' attrs="{'readonly': [('id', '!=', False)]}"/>
                             <h2 colspan="2" style="color: #9a89c0;">Datos Personales Usuario 2</h2>
-                            <field name='client2' string="Usuario 2" attrs="{'invisible': [('isClient', '=', False)], 'readonly': [('id', '!=', False)]}"/>
+                            <field name='client2' string="Usuario 2" attrs="{'invisible':1}"/>
                             <field name="dni2" attrs="{'readonly': [('id', '!=', False)]}"/>
                             <field name="nameCliente2" attrs="{'readonly': [('id', '!=', False)]}"/>
                             <field name="surname2" attrs="{'readonly': [('id', '!=', False)]}"/>
                             <field name="tlf2" attrs="{'readonly': [('id', '!=', False)]}" />
                             <field name="dateBirth2" attrs="{'readonly': [('id', '!=', False)]}" />
                             <field name="email2" widget="email" attrs="{'readonly': [('id', '!=', False)]}"/>
+
                             <h2 colspan="2" style="color: #9a89c0;">Vehiculo</h2>
-                            <field name='vehiculo2' attrs="{'invisible': ['|',('isClient', '=', False),('client2', '=', False)], 'readonly': [('id', '!=', False)]}"/>
+                            <field name='vehiculo2' attrs="{'invisible':1}"/>
                             <field name='matricula2' attrs="{'readonly': [('id', '!=', False)]}"/>
                             <field name='marca2' attrs="{'readonly': [('id', '!=', False)]}"/>
                             <field name='modelo2' attrs="{'readonly': [('id', '!=', False)]}"/>
+
                             <h2 colspan="2" style="color: #9a89c0;">Aseguradora</h2>
-                            <field name="nameAseguradora2" attrs="{'readonly': [('id', '!=', False)]}"/>
-                            <field name="numPoliza2" attrs="{'readonly': [('id', '!=', False)]}"/>
+                            <field name="nameAseguradora2" attrs="{'invisible': [('nameAseguradora2', '=', False)],'readonly': [('id', '!=', False)]}" />
+                            <field name="numPoliza2"  attrs="{'invisible': [('numPoliza2', '=', False)],'readonly': [('id', '!=', False)]}" />
+                            <field name="nameAsegurNoClien" attrs="{'invisible': [('nameAseguradora2', '!=', False)],'readonly': [('id', '!=', False)]}" />
+                            <field name="numPoliNoClien"  attrs="{'invisible': [('numPoliza2', '!=', False)],'readonly': [('id', '!=', False)]}" />
+
                         </group>
                         <group colspan="2">
                             <h2 colspan="2" style="color: #9a89c0;">Información Adicional</h2>
                             <field name='descripcion' attrs="{'readonly': [('id', '!=', False)]}"/>
-                            <field name='photo' string="Foto del accidente" widget="image" attrs="{'readonly': [('id', '!=', False)]}" />
+                            <field name='photo' widget="image"  attrs="{'readonly': [('id', '!=', False)]}"/>
                         </group>
                     </group>
                 </form>
